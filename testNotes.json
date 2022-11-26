@@ -1,0 +1,17 @@
+{
+    "options": {
+        "default_theme_color": "blue"
+    },
+    "notes": [{
+        "title": "test note 1",
+        "content": "test content 1",
+        "links": ["link1", "link2"],
+        "theme_color": "blue"
+    }, 
+    {
+        "title": "test note 2",
+        "content": "test content 2",
+        "links": ["link3", "link4"],
+        "theme_color": "red"
+    }]
+}

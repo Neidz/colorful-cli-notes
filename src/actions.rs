@@ -13,3 +13,7 @@ pub fn edit_note() {
 pub fn delete_note() {
     println!("deleting notes");
 }
+
+pub fn options() {
+    println!("options");
+}

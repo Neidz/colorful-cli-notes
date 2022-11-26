@@ -1,13 +1,24 @@
 mod actions;
-use actions::{add_note, delete_note, edit_note, show_notes};
+use actions::{add_note, delete_note, edit_note, options, show_notes};
+mod manipulate_json;
 use console::Term;
-use dialoguer::{theme::ColorfulTheme, Select};
+use dialoguer::Select;
+use manipulate_json::read_json_file;
 
 fn main() {
-    let items = vec!["Show notes", "New note", "Edit note", "Delete note", "Exit"];
+    read_json_file();
+
+    let items = vec![
+        "Show notes",
+        "New note",
+        "Edit note",
+        "Delete note",
+        "Options",
+        "Exit",
+    ];
 
     loop {
-        let selection = Select::with_theme(&ColorfulTheme::default())
+        let selection = Select::new()
             .items(&items)
             .interact_on_opt(&Term::stderr())
             .unwrap();
@@ -18,6 +29,7 @@ fn main() {
                 1 => add_note(),
                 2 => edit_note(),
                 3 => delete_note(),
+                4 => options(),
                 _ => {
                     println!("bye!");
                     break;
