@@ -1,35 +1,16 @@
-use colored::Colorize;
 use console::Term;
 use dialoguer::Select;
-use serde::{Deserialize, Serialize};
 use serde_json::{from_str, to_string};
 use std::fs::{rename, write, File};
 use std::io::Read;
 
-#[derive(Deserialize, Serialize)]
-pub struct Options {
-    pub default_theme_color: String,
-}
+use super::structs::{JsonFileStructure, Options};
 
-#[derive(Deserialize, Serialize)]
-pub struct Note {
-    pub title: String,
-    pub content: String,
-    pub links: Vec<String>,
-    pub theme_color: String,
-}
+pub fn create_new_json() -> File {
+    File::create("notes.json").expect("Unable to create notes.json file");
+    let created_file = File::open("notes.json").expect("Unable to create and read new file");
 
-#[derive(Deserialize, Serialize)]
-pub struct JsonFileStructure {
-    pub options: Options,
-    pub notes: Vec<Note>,
-}
-
-fn create_new_json() -> File {
-    File::create("notes.json").expect("Couldn't create notes.json file");
-    let created_file = File::open("notes.json").expect("Couldn't create and read new file");
-
-    let json_template: JsonFileStructure = JsonFileStructure {
+    let json_template = JsonFileStructure {
         options: Options {
             default_theme_color: String::from("White"),
         },
@@ -53,7 +34,7 @@ pub fn read_json_file() -> JsonFileStructure {
     let notes_file: JsonFileStructure = match from_str(&mut buff) {
         Ok(json) => json,
         Err(_) => {
-            println!("{}", "Unexpected file structure, rename current notes.json file to temp.json and create new file for the notes?\n".red());
+            println!("{}", "Unexpected file structure, rename current notes.json file to temp.json and create new file for the notes?\n");
             let selection = Select::new()
                 .items(&["Yes", "No"])
                 .interact_on_opt(&Term::stderr())
@@ -81,4 +62,10 @@ pub fn read_json_file() -> JsonFileStructure {
         }
     };
     notes_file
+}
+
+pub fn write_json_to_file(new_json: JsonFileStructure) {
+    let new_json_string = to_string(&new_json).unwrap();
+
+    write("notes.json", &new_json_string).expect("Unable to write to file");
 }

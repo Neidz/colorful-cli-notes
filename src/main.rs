@@ -1,9 +1,8 @@
-mod actions;
-use actions::{add_note, delete_note, edit_note, options, show_notes};
-mod manipulate_json;
+mod notes;
 use console::Term;
 use dialoguer::Select;
-use manipulate_json::read_json_file;
+use notes::actions::{add_note, delete_note, edit_note, options, show_notes};
+use notes::manipulate_json::read_json_file;
 
 fn main() {
     read_json_file();
