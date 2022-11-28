@@ -2,7 +2,7 @@ use console::Term;
 use dialoguer::Select;
 use std::io;
 
-use super::structs::Note;
+use super::{color_utils::choose_color, structs::Note};
 
 pub fn create_blank_note() -> Note {
     let blank_note = Note {
@@ -70,13 +70,7 @@ pub fn edit_links(note: &mut Note) {
 }
 
 pub fn edit_theme(note: &mut Note) {
-    // let colors: [Styles; 8] = []
+    let color = choose_color();
 
-    // let selection = Select::new()
-    //         .items(&current_list_of_links)
-    //         .interact_on_opt(&Term::stderr())
-    //         .unwrap();
-
-    //     match selection {
-    //         Some(value) => match value {}
+    note.theme = color;
 }

@@ -4,6 +4,8 @@ use serde_json::{from_str, to_string};
 use std::fs::{rename, write, File};
 use std::io::Read;
 
+use crate::notes::color_utils::color_using_theme;
+
 use super::structs::{JsonFileStructure, Options};
 
 pub fn create_new_json() -> File {
@@ -36,7 +38,7 @@ pub fn read_json_file() -> JsonFileStructure {
         Err(_) => {
             println!("{}", "Unexpected file structure, rename current notes.json file to temp.json and create new file for the notes?\n");
             let selection = Select::new()
-                .items(&["Yes", "No"])
+                .items(&[color_using_theme("Yes"), color_using_theme("No")])
                 .interact_on_opt(&Term::stderr())
                 .unwrap();
 
@@ -52,7 +54,7 @@ pub fn read_json_file() -> JsonFileStructure {
                         new_notes_file
                     }
                     _ => {
-                        panic!("bye!");
+                        panic!("{}", color_using_theme("bye!"));
                     }
                 },
                 None => {

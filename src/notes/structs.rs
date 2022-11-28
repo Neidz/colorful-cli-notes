@@ -18,3 +18,4 @@ pub struct JsonFileStructure {
     pub options: Options,
     pub notes: Vec<Note>,
 }
+
